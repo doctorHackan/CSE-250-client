@@ -14,6 +14,7 @@ const {
 const { router: laundryRouter, setLaundryCollections } = require("./laundry");
 const { router: rommsRouter, setRoomsCollection } = require("./rooms");
 const { router: menuRouter, setMenuCollection } = require("./menu");
+const CartRoutes = require("./routes/CartRoutes");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -41,11 +42,7 @@ let menuCollection;
 async function connectDB() {
   try {
     await client.connect();
-<<<<<<< HEAD
-    console.log(" Connected to MongoDB");
-=======
     console.log("✅Connected to MongoDB");
->>>>>>> 38d03fe1dd0f3b60aadd4e4e76f7b8b4471618f5
 
     const db = client.db(process.env.MONGO_DB || "HallMannagement");
     usersCollection = db.collection("users");
@@ -69,6 +66,7 @@ async function connectDB() {
   }
 }
 
+app.use("/api/cart",CartRoutes);
 app.use("/api/laundry", laundryRouter);
 app.use("/api/rooms", rommsRouter);
 app.use("/api/menu", menuRouter);
