@@ -15,6 +15,8 @@ const { router: laundryRouter, setLaundryCollections } = require("./laundry");
 const { router: rommsRouter, setRoomsCollection } = require("./rooms");
 const { router: menuRouter, setMenuCollection } = require("./menu");
 const CartRoutes = require("./routes/CartRoutes");
+const OrderRoutes = require("./routes/OrderRoutes");
+const NotFound = require("./middlewares/NotFound");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -66,11 +68,15 @@ async function connectDB() {
   }
 }
 
+app.use("/api/order",OrderRoutes);
 app.use("/api/cart",CartRoutes);
 app.use("/api/laundry", laundryRouter);
 app.use("/api/rooms", rommsRouter);
 app.use("/api/menu", menuRouter);
 app.use("/api", complainRouter);
+
+
+app.use(NotFound);
 
 // 🔹 Multer Configuration for Seat Application
 const storage = multer.memoryStorage();
